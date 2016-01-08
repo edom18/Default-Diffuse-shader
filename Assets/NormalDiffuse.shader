@@ -54,11 +54,11 @@
 
                 for (int index = 0; index < 4; index++) {    
                    float4 lightPosition = float4(unity_4LightPosX0[index], unity_4LightPosY0[index], unity_4LightPosZ0[index], 1.0);
-                   float3 vertexToLightSource = float3(lightPosition - worldPos);        
+                   float3 vertexToLightSource = float3(lightPosition.xyz - worldPos.xyz);        
                    float3 lightDirection = normalize(vertexToLightSource);
                    float squaredDistance = dot(vertexToLightSource, vertexToLightSource);
                    float attenuation = 1.0 / (1.0  + unity_4LightAtten0[index] * squaredDistance);
-                   float3 diffuseReflection = attenuation * float3(unity_LightColor[index]) * float3(_Color) * max(0.0, dot(worldN, lightDirection));         
+                   float3 diffuseReflection = attenuation * float3(unity_LightColor[index].rgb) * float3(_Color.rgb) * max(0.0, dot(worldN, lightDirection));         
                    o.vertexLighting = o.vertexLighting + diffuseReflection * 2;
                 }
 
